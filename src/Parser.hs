@@ -80,13 +80,13 @@ parseAbstraction nTI@nameToIndex = do
   reservedOp "."
   let nTI' = updateNameToIndex boundVariables nTI
   abstractionBody <- parseTerm nTI'
-  return $ uncurrify boundVariables abstractionBody
+  return $ currify boundVariables abstractionBody
   where
     updateNameToIndex boundVariables nTI@nameToIndex =
       let lenBV = length boundVariables
        in foldl (\x (y, z) -> Map.insert y z x) nTI
             $ zip boundVariables [lenBV - 1, lenBV - 2..0]
-    uncurrify boundVariables abstractionBody =
+    currify boundVariables abstractionBody =
       foldr Abstraction abstractionBody
         $ map (\(x, y) -> Variable x y)
         $ zip boundVariables
