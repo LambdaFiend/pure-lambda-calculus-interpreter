@@ -351,11 +351,9 @@ And so on. It's should come as natural that the properties and rules are verifie
 # What is to be done (very much generally speaking)
 Eta Reductions (should be quick)
 
-The interface should be intuitive enough, although totally unappealing.
+The interface should be intuitive enough, although totally unappealing and forcing. In any case, the interface will be grealy improved sometime.
 
-The interface will be grealy improved sometime.
-
-Currently, the only form of reducing is not the most efficient one (it runs the AST for each reduction!).
+Currently, the only form of reducing is not the most efficient one (it runs the AST for each reduction!). The optimization will only cover cases when you only want to see printed the Normal Form (final result).
 
 Soon, I'll add a chain reducing function (only traverses teh AST once).
 
