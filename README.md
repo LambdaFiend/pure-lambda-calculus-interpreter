@@ -383,7 +383,7 @@ YF % FYF
 
 ## Typing, Turing Completeness, Total Lambda Calculus, etc OVERVIEW ONLY
 
-Complicated and takes a while to think through how to not extend myself to far (also in order to avoid spouting nonsense).
+Complicated and takes a while to think through how not to extend myself too far (also in order to avoid spouting nonsense).
 
 # What is to be done (very much generally speaking)
 Eta Reductions (should be quick)
