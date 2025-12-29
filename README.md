@@ -56,7 +56,7 @@ Also, most importantly: TAKE EVERYTHING I SAY WITH A GRAIN OF SALT! Look things 
 ## Syntax of Lambda Terms for ImpLam
 
 Variables are single character, and may be followed by any number of apostrophes '.
-Parenthesis are as free to be used as they may be. Syntatic sugar is a thing, therefore you may write either:
+Parenthesis are as free to be used as they may be. syntactic sugar is a thing, therefore you may write either:
 
 \x.\y.xy
 
