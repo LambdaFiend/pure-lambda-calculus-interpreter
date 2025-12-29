@@ -22,7 +22,7 @@ type LambdaState = Term
 
 data Reduction
   = Reduction Index Term
-  | EtaReduced
+  | ReductionIgnored
   | NoReduction
   deriving (Show, Eq)
 

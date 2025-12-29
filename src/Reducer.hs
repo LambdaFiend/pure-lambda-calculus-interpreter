@@ -89,14 +89,13 @@ alphaConvertIfNeeded term1 term2 =
 handleReduction :: Term -> Term -> Name -> (Term, Reduction) 
 handleReduction term1 term2 name =
   if (etaNeeded)
-    then (term1, EtaReduced)
+    then (term1, ReductionIgnored)
     else (alphaConvertIfNeeded term1 term2, Reduction 1 term2)
-  where etaNeeded = etaReductionNeeded term1 name 1
+  where etaNeeded = substitutionNeeded term1 name 1
 
 -- is looking for a reduction
 betaReduction :: Term -> Reduction -> (Term, Reduction)
-betaReduction term reduced@EtaReduced = (term, reduced)
-
+betaReduction term reduced@ReductionIgnored = (term, reduced)
 betaReduction (Variable name index) reduced@NoReduction = (Variable name index, reduced)
 betaReduction (Abstraction term1 term2) NoReduction =
   let (term2', reduced) = betaReduction term2 NoReduction
@@ -200,14 +199,14 @@ renewAvailableVariables varSets
   | otherwise                 = varSets
 
 
-etaReductionNeeded :: Term -> Name -> Index -> Bool
-etaReductionNeeded (Variable _ index1) name index2 = index1 /= index2
-etaReductionNeeded (Abstraction (Variable name1 _) term2) name2 index
+substitutionNeeded :: Term -> Name -> Index -> Bool
+substitutionNeeded (Variable _ index1) name index2 = index1 /= index2
+substitutionNeeded (Abstraction (Variable name1 _) term2) name2 index
   | name1 == name2 = True
-  | otherwise = etaReductionNeeded term2 name2 (index + 1)
-etaReductionNeeded (Application term1 term2) name index =
-  let result1 = etaReductionNeeded term1 name index
-      result2 = etaReductionNeeded term2 name index
+  | otherwise = substitutionNeeded term2 name2 (index + 1)
+substitutionNeeded (Application term1 term2) name index =
+  let result1 = substitutionNeeded term1 name index
+      result2 = substitutionNeeded term2 name index
    in result1 && result2
 
 
