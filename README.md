@@ -51,6 +51,8 @@ a \%\ b  (is not identical...)
 
 a \%\ M
 
+Also, most importantly: TAKE EVERYTHING I SAY WITH A GRAIN OF SALT! Look things up yourself, I highly suggest books, for example the ones of Lawrence Paulson, Chris Hanken or Barendregt (authors).
+
 ## Syntax of Lambda Terms for ImpLam
 
 Variables are single character, and may be followed by any number of apostrophes '.
