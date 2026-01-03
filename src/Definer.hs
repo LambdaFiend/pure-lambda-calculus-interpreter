@@ -2,6 +2,7 @@ module Definer where
 
 import qualified Data.Set as Set
 import qualified Data.Map as Map
+import qualified Data.Sequence as Seq
 
 type Name = String
 type Index = Int
@@ -30,6 +31,11 @@ type NameToNewName = Map.Map String String
 
 type VariableSet4 = (VariableSet, VariableSet, VariableSet, VariableSet)
 
+type Conversions = Int
+type Valid = Bool
+
+type ReductionSequence = Seq.Seq Term
+
 fst4 :: (a, b, c, d) -> a
 fst4 (x, _, _, _) = x
 
@@ -41,3 +47,7 @@ trd4 (_, _, z, _) = z
 
 frt4 :: (a, b, c, d) -> d
 frt4 (_, _, _, w) = w
+
+extractTermFromMaybe :: Maybe Term -> Term
+extractTermFromMaybe (Just term) = term
+extractTermFromMaybe Nothing     = Variable "" (-2)

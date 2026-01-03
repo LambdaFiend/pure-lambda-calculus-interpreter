@@ -7,6 +7,7 @@ import Printer
 import Text.Parsec
 import qualified Data.Map as Map
 import qualified Data.Set as Set
+import qualified Data.Sequence as Seq
 
 main :: IO ()
 main = do
@@ -37,7 +38,7 @@ main = do
   putStrLn ""
   putStrLn $ show allVars
   putStrLn ""  
-  putStrLn $ unpackText $ showTermSyntaxSugar result
+  putStrLn $ showTerm result
   putStrLn ""
   putStrLn "Now, insert the second term here: "
   putStrLn ""
@@ -60,7 +61,7 @@ main = do
   putStrLn ""
   putStrLn $ show allVars
   putStrLn ""  
-  putStrLn $ unpackText $ showTermSyntaxSugar result2
+  putStrLn $ showTerm result2
   putStrLn ""
   if (showAllRedexes /= "No")
     then do
@@ -82,16 +83,24 @@ main = do
   putStrLn $ show $ isAlphaEquivalent firstRedex secondRedex
   putStrLn ""
   putStrLn "Check first term reduced as requested here: "
-  putStrLn $ unpackText $ showTermSyntaxSugar firstRedex
+  putStrLn $ showTerm firstRedex
   putStrLn ""
   putStrLn "Check second term reduced as requested here: "
-  putStrLn $ unpackText $ showTermSyntaxSugar secondRedex
+  putStrLn $ showTerm secondRedex
   putStrLn ""
-  let eta = etaReductionSearch result
-  putStrLn $ unpackText $ showTermSyntaxSugar eta
+  putStrLn "Eta Reduced all the way: "
+  let eta = chainEtaReductionSearch result [] (-1)
+  putStrLn $ showTerm $ fst eta
+  putStrLn ""
+  putStrLn "Are both terms Beta Equivalent? Check here: "
+  putStrLn $ show $ isBetaEquivalent result result2
+  putStrLn ""
+  putStrLn "Chain beta Redexes: "
+  putStrLn $ show $ chainBetaReduction result Seq.empty 100 0
   putStrLn ""
   putStrLn "Next iteration of the program has started: "
   putStrLn ""
+
   main
 
 

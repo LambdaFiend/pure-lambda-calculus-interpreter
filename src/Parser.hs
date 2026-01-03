@@ -78,7 +78,7 @@ parseAbstraction nTI@nameToIndex = do
   reservedOp "\\" <|> reservedOp "λ"
   boundVariables <- sepBy1 parseSimpleVariable spaces
   reservedOp "."
-  let nTI' = updateNameToIndex boundVariables nTI
+  let nTI' = updateNameToIndex boundVariables $ fmap ((+) 1) nTI
   abstractionBody <- parseTerm nTI'
   return $ currify boundVariables abstractionBody
   where

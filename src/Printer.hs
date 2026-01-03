@@ -17,46 +17,55 @@ symbolBuild ")" = T.fromString ")"
 symbolBuild "." = T.fromString "."
 symbolBuild " " = T.fromString " "
 
-showTerm :: Term -> T.Builder
-showTerm (Variable name index) = T.fromString name
-showTerm (Abstraction term1 term2) =
+-- shows all parentheses;
+showTermFullParens :: Term -> T.Builder
+showTermFullParens (Variable name index) = T.fromString name
+showTermFullParens (Abstraction term1 term2) =
   symbolBuild "("
     `T.mappend` symbolBuild "λ"
-    `T.mappend` showTerm term1
+    `T.mappend` showTermFullParens term1
     `T.mappend` symbolBuild "."
-    `T.mappend` showTerm term2
+    `T.mappend` showTermFullParens term2
     `T.mappend` symbolBuild ")"
-showTerm (Application term1@(Abstraction _ _) term2) =
+showTermFullParens (Application term1@(Abstraction _ _) term2) =
   symbolBuild "("
-    `T.mappend` showTerm term1
+    `T.mappend` showTermFullParens term1
     `T.mappend` symbolBuild ")"
     `T.mappend` symbolBuild " "
-    `T.mappend` showTerm term2
-showTerm (Application term1 term2) =
+    `T.mappend` showTermFullParens term2
+showTermFullParens (Application term1 term2) =
   symbolBuild "("
-    `T.mappend` showTerm term1
+    `T.mappend` showTermFullParens term1
     `T.mappend` symbolBuild " "
-    `T.mappend` showTerm term2
+    `T.mappend` showTermFullParens term2
     `T.mappend` symbolBuild ")"
+
+-- by default, it uses syntax sugar for showing the term
+showTerm :: Term -> String
+showTerm term = unpackText $ showTermSyntaxSugarStart term
+
+-- adds syntactic sugar and attempts to minimize parentheses
+-- by only adding them around applications on the right and
+-- abstractions which do not encompass the whole term
+showTermSyntaxSugarStart :: Term -> T.Builder
+showTermSyntaxSugarStart term@(Abstraction term1 term2) =
+  symbolBuild "λ" `T.mappend` getSyntaxSugar term
+showTermSyntaxSugarStart term = showTermSyntaxSugar term
 
 showTermSyntaxSugar :: Term -> T.Builder
 showTermSyntaxSugar (Variable name index) = T.fromString name
 showTermSyntaxSugar term@(Abstraction term1 term2) =
-  symbolBuild "λ" `T.mappend` getSyntaxSugar term
+  parensSyntaxSugar $ (symbolBuild "λ" `T.mappend` getSyntaxSugar term)
 showTermSyntaxSugar (Application term1 term2@(Application _ _)) =
-  showTermSyntaxSugar term1 `T.mappend` parensSyntaxSugar term2
+  showTermSyntaxSugar term1 `T.mappend` (parensSyntaxSugar $ showTermSyntaxSugar term2)
 showTermSyntaxSugar term@(Application (Application _ _) _) = getSyntaxSugar term
-showTermSyntaxSugar (Application term1 term2) =
-  parensSyntaxSugar term1 `T.mappend` parensSyntaxSugar term2
+showTermSyntaxSugar (Application term1 term2) = showTermSyntaxSugar term1 `T.mappend` showTermSyntaxSugar term2
 
-parensSyntaxSugar :: Term -> T.Builder
-parensSyntaxSugar term =
-  case term of
-    Abstraction _ _ ->
-      symbolBuild "("
-        `T.mappend` showTermSyntaxSugar term
-        `T.mappend` symbolBuild ")"
-    _ -> showTermSyntaxSugar term
+parensSyntaxSugar :: T.Builder -> T.Builder
+parensSyntaxSugar text =
+  symbolBuild "("
+    `T.mappend` text
+    `T.mappend` symbolBuild ")"
 
 getSyntaxSugar :: Term -> T.Builder
 getSyntaxSugar (Abstraction (Variable name _) term2@(Abstraction _ _)) =
@@ -66,5 +75,5 @@ getSyntaxSugar (Abstraction (Variable name _) term2) =
     `T.mappend` symbolBuild "."
     `T.mappend` showTermSyntaxSugar term2
 getSyntaxSugar (Application term1@(Application _ _) term2) =
-  getSyntaxSugar term1 `T.mappend` parensSyntaxSugar term2
+  getSyntaxSugar term1 `T.mappend` showTermSyntaxSugar term2
 getSyntaxSugar term@(Application _ _) = showTermSyntaxSugar term
