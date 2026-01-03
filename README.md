@@ -2,6 +2,14 @@
 
 Impure Lambda (as of yet, it's totally pure!)
 
+# Purpose
+
+I'm not sure yet what this repository is for.
+
+I'm thinking of using it for my studies, as a tool which will help me efficiently process and verify and information. Also great for learning by doing.
+
+# Info
+
 ## How to run
 
 Run ghci Main.hs
