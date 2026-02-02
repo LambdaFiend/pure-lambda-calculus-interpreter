@@ -6,7 +6,7 @@ Impure Lambda (as of yet, it's totally pure! the name sounds evil, it could sugg
 
 I'm not sure yet what this repository is for.
 
-I'm thinking of using it for my studies, as a tool which will help me efficiently process and verify data. Also great for learning by doing.
+I'm thinking of using it for my studies, as a tool which could help me efficiently process and verify data. Also great for learning by doing.
 
 # Info
 
