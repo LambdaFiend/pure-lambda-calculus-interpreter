@@ -111,6 +111,34 @@ You may add spaces as you like. For example:
 
 (\xyz.abc) is the same as (\x y z.a b c)
 
+## Substitutions
+
+I'll not talk much regarding substitutions, despite it's incredible worth as a topic.
+Essentially, if you have the following:
+
+M[x -> N]
+
+which is the same as:
+
+M[N/x]
+
+you may convert it into the term M where all free occurrences of x are substituted (exchanged) by N.
+
+Here's an example:
+
+M % xy(zy), and N % \x.x
+
+M[x -> N] % (\x.x)y(zy)
+
+Another one:
+
+M % x(\x.xy)y, and N % \x.x
+
+M[y -> N] % x(\x.x(\x.x))(\x.x)
+
+One should be careful when there's an abstraction of a variable covering the free variable we are substituting, because if the new term N has a free x, then it could become bound. It shouldn't, as free variables are their own unbound thing.
+
+This issue will be covered in the alpha conversion section.
 
 ## Beta and Eta Reductions
 
