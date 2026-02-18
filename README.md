@@ -6,8 +6,6 @@ Lambda Calculus Interpreter
 
 I'm not sure yet what this repository is for.
 
-I'm thinking of using it for my studies, as a tool which could help me efficiently process and verify data. Also great for learning by doing.
-
 # Info
 
 ## How to run
@@ -67,7 +65,7 @@ Also, most importantly: TAKE EVERYTHING I SAY WITH A GRAIN OF SALT! Look things 
 
 ## Syntax of Lambda Terms for ImpLam
 
-Variables are single character, and may be followed by any number of apostrophes '.
+Variables are single character, and may be followed by any number of primes/apostrophes '.
 Parenthesis are as free to be used as they may be. syntactic sugar is a thing, therefore you may write either:
 
 \x.\y.xy
@@ -309,12 +307,6 @@ Here's a better example, via Applicative Order of Reduction (for Normal Order, i
 
 (\x.y)((\x.xxx)(\x.xxx)) ->β (\x.y)((\x.xxx)(\x.xxx)(\x.xxx)) ->β (\x.y)((\x.xxx)(\x.xxx)(\x.xxx)(\x.xxx)) ->β to infinity and beyond|
 
-In conclusion, you may want to pick Applicative Order of Reduction if you're looking for getting to the Normal Form Quicker, but beware: you need to make sure you can get there!
-
-## A Suggestion regarding Non-Termination
-
-If you really want to make sure a Lambda Term really does not terminate, try proving it via induction proof! It's the best, and will likely suit the problem at hand!
-
 ## A Couple of some Interesting Lambda Terms 
 
 By the way, the term:
@@ -399,9 +391,6 @@ Such that for n, f is applied n times to x, one after another!
 We will use Cn to denote the Church Numeral of n (as already shown).
 
 Functions for addition, subtraction, successor, exponentiation, etc can be created!
-
-Lambda Calculus is Turing Complete, therefore what can be computed, will be describeable in Lambda Calculus! (unless it's typed, in which case it becomes total and ceases to be Turing Complete; there are perks to this).
-I might talk a little about this on a later topic.
 
 
 ## Encoding of various other structures (such as lists, booleans, pairs, etc)
@@ -518,18 +507,4 @@ equals' % \hnm.if (or (ISZERO n) (ISZERO m))
                   (h (PRED n) (PRED m))
 
 In case you're not familiar with iszero, mult or pred, I suggest you take a look at the encodings I gave. It will be all the more worthwhile if you read actual didactic documents. It's worth it to understand how these terms come to be.
-
-# What is to be done (very much generally speaking)
-
-The interface should be intuitive enough, although totally unappealing and forcing. In any case, it shall be grealy improved, sometime.
-
-Currently, the only form of reducing is not the most efficient one (It runs the whole AST for each reduction! Is there a better method?). The optimization will only cover cases when you only want to see printed the Normal Form (final result) (hopefully this is possible, although I'm a little skeptical considering lambda calculus has some (super serious) trouble defining reductions as atomic operations computationally).
-
-Thus, soon I'll be adding a chain reducing function (only traverses the AST once).
-
-I will also add a way of showing whether it was an eta or a beta reduction done for each step.
-
-Many other improvements will be made, for example environment variables and libraries.
-
-More control and flexibility for the interface. And so on... This might take a while, I'll be rather busy until summer's here.
 
