@@ -17,7 +17,7 @@ Although step-by-step evaluation is not available (*yet*), each strategy has the
 | t1 t2 | An application.<br>If t1 is an abstraction \x.t11,<br>then (t1 t2) is a redex,<br>and t2 may replace any<br>x within t11 that<br>may be bound to<br>the abstraction<br> |
 | x | A variable.<br>It can contain any<br>combination of lowercase<br>characters and end in any<br>number of primes.<br>It can either be bound or<br>free, in which case (the latter)<br>it's name can't change<br>and neither can it be<br>replaced due to a reduction<br>of a redex. |
 
-The λ (lambda) symbol is a synonym of \.
+The λ (lambda) symbol is a synonym of \\.
 
 Applications are conventionally left associative, and abstractions right associative.
 
