@@ -49,7 +49,7 @@ main = do
             Right ast -> do
               maybeAST <- validateDeBruijn (genIndex ast)
               tryMaybeAST maybeAST (\ast' -> outputStrLn ("Showing:\n" ++ show ast' ++ "\n"))
-              let nextStep2 maybeAST' = tryMaybeAST maybeAST' (\ast'' -> outputStrLn ("Evaluating:\n" ++ show ast''))
+              let nextStep2 maybeAST' = tryMaybeAST maybeAST' (\ast'' -> tryMaybeAST (fixNames ast'') (\ast''' -> outputStrLn ("Evaluating:\n" ++ show ast''')))
                   nextStep1 ast' = (validateDeBruijn ast' >>= nextStep2)
               tryMaybeAST (Just (eval strat) <*> maybeAST) nextStep1
           repl strat
