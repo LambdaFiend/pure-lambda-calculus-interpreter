@@ -44,9 +44,6 @@ executable PLCI
   build-depends: 
     base ^>=4.20.2.0,
     array ^>=0.5.8.0,
-    directory ^>=1.3.10.1,
-    ansi-terminal ^>=1.1.5,
-    terminfo ^>=0.4.1.7,
     haskeline ^>=0.8.2.1
 
   hs-source-dirs:
