@@ -44,7 +44,7 @@ main = do
       maybeInput <- getInputLine "plci> "
       case Just words <*> maybeInput of
         Nothing -> pure ()
-        Just (h : []) | elem h [":?", ":h", ":help"] -> outputStrLn commandList
+        Just (h : []) | elem h [":?", ":h", ":help"] -> outputStrLn commandList >>= \_ -> repl strat env
         Just (q : []) | elem q [":q", ":quit"] -> return ()
         Just (order : []) | elem order [":norm", ":appl"] -> do
           case (getStratData order) of
